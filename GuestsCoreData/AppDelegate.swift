@@ -6,12 +6,34 @@
 //
 
 import UIKit
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    //MARK: - Persistent Container
+    lazy var persistenContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "GuestsDB")
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+    
+    //MARK: - Save Context
+    func saveContext() {
+        let context = persistenContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                fatalError("Unresolved error on SaveContext \(error) - \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
