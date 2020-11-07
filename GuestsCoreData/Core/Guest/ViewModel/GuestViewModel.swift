@@ -16,11 +16,16 @@ class GuestViewModel {
         self.context = context
     }
     
-    func deletInvited() {
-        
+    func delete(guest: NSManagedObject) {
+        context.delete(guest)
+        do {
+            try context.save()
+        } catch let error as NSError {
+            fatalError("Could not save \(error) - \(error.userInfo)")
+        }
     }
     
-    func saveInvited(name: String) -> NSManagedObject {
+    func save(name: String) -> NSManagedObject {
         let entity = NSEntityDescription.entity(forEntityName: "Guest",
                                                 in: context)!
         

@@ -68,7 +68,7 @@ class GuestsView: UIViewController {
             }
             
             self.guests.append(
-                self.viewModel!.saveInvited(name: nameGuest))
+                self.viewModel!.save(name: nameGuest))
             self.tableView.reloadData()
         }
         let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel)
@@ -77,6 +77,11 @@ class GuestsView: UIViewController {
         alertView.addAction(saveAction)
         alertView.addAction(cancelAction)
         present(alertView, animated: true)
+    }
+    
+    func reloadData() {
+        self.guests = self.viewModel!.getGuests()
+        self.tableView.reloadData()
     }
 
 }
@@ -91,5 +96,18 @@ extension GuestsView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = guest.value(forKey: "name") as? String
         return cell
+    }
+}
+
+extension GuestsView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You tapped cell number \(indexPath.row).")
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.viewModel!.delete(guest: self.guests[indexPath.row])
+            self.reloadData()
+        }
     }
 }
