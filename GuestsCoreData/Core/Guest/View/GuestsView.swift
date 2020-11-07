@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class GuestsView: UIViewController {
     
@@ -19,7 +20,7 @@ class GuestsView: UIViewController {
     
     //MARK: - Local Variables
     var viewModel: GuestViewModel?
-    var guests: [String] = []
+    var guests: [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +29,19 @@ class GuestsView: UIViewController {
         self.view.backgroundColor = .white
         setupUI()
         configureTableView()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        self.viewModel = GuestViewModel(context: appDelegate.persistenContainer.viewContext)
+        self.guests = viewModel!.getGuests()
     }
     
     //MARK: - Setup UI
     func setupUI() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Add", style: .plain, target: self, action: #selector(addName))
         self.view.addSubview(tableView)
-        self.tableView.backgroundColor = .blue
         self.tableView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0.0)
             make.width.equalToSuperview()
@@ -41,23 +49,35 @@ class GuestsView: UIViewController {
         }
     }
     
-    //MARK: - Setup Actions
-    
     //MARK: - Methods
     func configureTableView() {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.dataSource = self
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func addName() {
+        let alertView = UIAlertController.init(title: "New guest",
+                                               message: "",
+                                               preferredStyle: .alert)
+        let saveAction = UIAlertAction.init(title: "Save", style: .default) {
+            [unowned self] action in
+            
+            guard let textField = alertView.textFields?.first,
+                  let nameGuest = textField.text else {
+                return
+            }
+            
+            self.guests.append(
+                self.viewModel!.saveInvited(name: nameGuest))
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel)
+        
+        alertView.addTextField()
+        alertView.addAction(saveAction)
+        alertView.addAction(cancelAction)
+        present(alertView, animated: true)
     }
-    */
 
 }
 
@@ -67,8 +87,9 @@ extension GuestsView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let guest = guests[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = guests[indexPath.row]
+        cell.textLabel?.text = guest.value(forKey: "name") as? String
         return cell
     }
 }

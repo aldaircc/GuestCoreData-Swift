@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521EC7742555D7680048AC25 /* GuestsDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 521EC7722555D7680048AC25 /* GuestsDB.xcdatamodeld */; };
 		529CD8FD25523F69004ED8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529CD8FC25523F69004ED8C0 /* AppDelegate.swift */; };
 		529CD8FF25523F69004ED8C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529CD8FE25523F69004ED8C0 /* SceneDelegate.swift */; };
 		529CD90125523F69004ED8C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529CD90025523F69004ED8C0 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		521EC7732555D7680048AC25 /* GuestsDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GuestsDB.xcdatamodel; sourceTree = "<group>"; };
 		529CD8F925523F69004ED8C0 /* GuestsCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuestsCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529CD8FC25523F69004ED8C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		529CD8FE25523F69004ED8C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				529CD90525523F69004ED8C0 /* Assets.xcassets */,
 				529CD90725523F69004ED8C0 /* LaunchScreen.storyboard */,
 				529CD90A25523F69004ED8C0 /* Info.plist */,
+				521EC7722555D7680048AC25 /* GuestsDB.xcdatamodeld */,
 			);
 			path = GuestsCoreData;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				529CD8FF25523F69004ED8C0 /* SceneDelegate.swift in Sources */,
 				529CD92D2552413F004ED8C0 /* Showable.swift in Sources */,
 				52F1CEB3255241DB009836E7 /* AppRouter.swift in Sources */,
+				521EC7742555D7680048AC25 /* GuestsDB.xcdatamodeld in Sources */,
 				529CD9232552405D004ED8C0 /* GuestsCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -452,6 +456,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		521EC7722555D7680048AC25 /* GuestsDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				521EC7732555D7680048AC25 /* GuestsDB.xcdatamodel */,
+			);
+			currentVersion = 521EC7732555D7680048AC25 /* GuestsDB.xcdatamodel */;
+			path = GuestsDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 529CD8F125523F69004ED8C0 /* Project object */;
 }
